@@ -1,9 +1,13 @@
 package com.gestionabonnements.dao;
 
 import com.gestionabonnements.entity.Paiement;
+import com.gestionabonnements.entity.StatutPaiement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Arrays.stream;
 
 public class PaiementDAO {
 
@@ -33,5 +37,27 @@ public class PaiementDAO {
         }
     }
 
+    public void delete(String idPaiement) {
+        paiements.removeIf(p -> p.getIdPaiement().equals(idPaiement));
+    }
 
+    public List<Paiement> findByAbonnement(String idAbonnement){
+        return paiements.stream().filter(p->p.getIdAbonnement().equals(idAbonnement))
+                .collect(java.util.stream.Collectors.toList());
+
+    }
+
+    public List<Paiement> getUnpaidByAbonnement(String idAbonnement){
+        return paiements.stream().filter(p -> p.getIdAbonnement().equals(idAbonnement))
+                .filter(p -> p.getStatut() == StatutPaiement.EN_RETARD)
+                .collect(java.util.stream.Collectors.toList());
+
+    }
+
+
+    public List<Paiement> findLastPayments() {
+        return paiements.stream().sorted((p1, p2) -> p2.getDateEcheance().compareTo(p1.getDateEcheance()))
+                .limit(5)
+                .collect(java.util.stream.Collectors.toList());
+    }
 }
