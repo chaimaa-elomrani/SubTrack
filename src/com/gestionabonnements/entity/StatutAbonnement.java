@@ -1,4 +1,7 @@
 package com.gestionabonnements.entity;
 
-public class StatutAbonnement {
+public enum StatutAbonnement {
+    ACTIVE,
+    SUSPENDU,
+    RESILIE
 }

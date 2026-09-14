@@ -1,4 +1,7 @@
 package com.gestionabonnements.entity;
 
-public class StatutPaiement {
+public enum StatutPaiement {
+    PAYE,
+    NON_PAYE,
+    EN_RETARD
 }
